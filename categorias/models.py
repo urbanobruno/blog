@@ -4,7 +4,7 @@ from django.db import models
 
 
 class Categoria(models.Model):
-    nome = models.CharField(max_length=50, verbose_name='Nome Categoria')
+    nome = models.CharField(max_length=50, verbose_name='Nome da Categoria')
 
     class Meta:
         verbose_name = 'Categoria'

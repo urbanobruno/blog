@@ -11,10 +11,10 @@ class ComentariosAdmin(admin.ModelAdmin):
         'email',
         'post',
         'data',
-        'publicado',
+        'publicado_comentario',
     )
     list_display_links = ('id', 'nome', 'email')
-    list_editable = ('publicado', )
+    list_editable = ('publicado_comentario', )
 
 
 admin.site.register(Comentarios, ComentariosAdmin)

@@ -16,7 +16,7 @@ class Posts(models.Model):
         Categoria, on_delete=models.DO_NOTHING, blank=True, null=True, verbose_name='Categoria'
     )
     imagem = models.ImageField(upload_to='post_img/%Y/%m/%d', blank=True, null=True, verbose_name='Imagem')
-    publicado = models.BooleanField(default=False, verbose_name='Publicar')
+    publicado_post = models.BooleanField(default=False, verbose_name='Publicar')
 
     class Meta:
         verbose_name = 'Post'

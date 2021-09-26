@@ -7,9 +7,9 @@ from django_summernote.admin import SummernoteModelAdmin
 
 class PostsAdmin(SummernoteModelAdmin):
     list_display = ('id', 'titulo', 'autor', 'data',
-                    'categoria', 'publicado',)
+                    'categoria', 'publicado_post',)
     list_display_links = ('id', 'titulo',)
-    list_editable = ('publicado',)
+    list_editable = ('publicado_post',)
     summernote_fields = ('conteudo', )
 
 

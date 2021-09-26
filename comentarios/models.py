@@ -7,13 +7,13 @@ from django.utils import timezone
 
 
 class Comentarios(models.Model):
-    nome = models.CharField(max_length=150)
-    email = models.EmailField()
-    comentario = models.TextField()
+    nome = models.CharField(max_length=150, verbose_name='Nome')
+    email = models.EmailField(verbose_name='E-mail')
+    comentario = models.TextField(verbose_name='Comentário')
     post = models.ForeignKey(Posts, on_delete=models.CASCADE)
     usuario = models.ForeignKey(User, on_delete=models.DO_NOTHING)
     data = models.DateTimeField(default=timezone.now)
-    publicado = models.BooleanField(default=False)
+    publicado_comentario = models.BooleanField(default=False)
 
     class Meta:
         verbose_name = 'Comentário'

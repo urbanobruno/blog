@@ -10,7 +10,6 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
 
-        User.objects.all().delete()
         Posts.objects.all().delete()
         Categoria.objects.all().delete()
         Comentarios.objects.all().delete()
@@ -118,14 +117,6 @@ class Command(BaseCommand):
             ['Fionnuala Southern', 'Fionnuala@yahoo.com', 'Fionnuala'],
         ]
 
-        user = User.objects.create(
-            id=1,
-            username='bruno',
-            first_name='Bruno',
-            last_name='Urbano',
-            email='teste@gmail.com',
-        )
-
         lista_categorias = [
             'Python',
             'Django',
@@ -133,37 +124,39 @@ class Command(BaseCommand):
             'Sistemas',
         ]
 
-        for i in lista_categorias:
-            Categoria.objects.update_or_create(
-                defaults={
-                    'nome': i,
-                }
+        for c in lista_categorias:
+            Categoria.objects.create(
+                nome=c
             )
 
         for i in range(1, 21):
             x = bool(choice([0, 1]))
             y = choice(lista_categorias)
-            Posts.objects.update_or_create(
-                defaults={
-                    'titulo': f'Teste{i}',
-                    'autor': User.objects.get(id=1),
-                    'conteudo': f'testando{i}',
-                    'excerto': f'testando{i}',
-                    'categoria': Categoria.objects.get(nome=y),
-                    'publicado': x,
-                }
+            Posts.objects.create(
+                titulo=f'Teste{i}',
+                autor=User.objects.get(username='bruno'),
+                conteudo=f'testando{i}',
+                excerto=f'testando{i}',
+                categoria_id=Categoria.objects.get(nome=y).id,
+                publicado_post=x,
             )
 
+        posts_ids = Posts.objects.all()[5:].values_list('id', flat=True)
+
+        user_comentario = User.objects.create(
+            username='Comentador',
+            email='comentador_dos_posts@gmail.com',
+            password='comentador123'
+        )
+
         for v in lista_comentarios:
-            post_id = randint(1, 16)
+            post_id = choice(posts_ids)
             publicado = bool(choice([0, 1]))
-            Comentarios.objects.update_or_create(
-                defaults={
-                    'nome': v[0],
-                    'email': v[1],
-                    'comentario': v[2],
-                    'post': Posts.objects.get(id=post_id),
-                    'usuario': user,
-                    'publicado': publicado,
-                }
+            Comentarios.objects.create(
+                nome=v[0],
+                email=v[1],
+                comentario=v[2],
+                post_id=post_id,
+                usuario_id=user_comentario.id,
+                publicado_comentario=publicado,
             )

@@ -2,8 +2,9 @@
 
 {% load humanize %}
 
+<!-- todo checar usar index.html -->
 {% block titulo %}
-    INDEX
+    BUSCA
 {% endblock %}
 
 {% block conteudo %}
@@ -26,7 +27,7 @@
                 <div class="card-body">
                     <h5 class="card-title">
                         <a href="{% url 'post_detalhes' post.id %}">
-                            {{ post.titulo }}
+                            A wonderful serenity has taken possession of my entire soul
                         </a>
                     </h5>
                     <p class="card-text">{{ post.excerto }}</p>
