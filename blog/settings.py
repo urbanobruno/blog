@@ -130,6 +130,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR / 'templates/static']
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 MEDIA_ROOT = [BASE_DIR / 'media']
 MEDIA_URL = '/media/'
@@ -148,3 +149,13 @@ MESSAGE_TAGS = {
 }
 
 X_FRAME_OPTIONS = 'SAMEORIGIN'
+
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+SECURE_SSL_REDIRECT = True
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+
+try:
+    from .local_settings import *
+except:
+    pass

@@ -3,7 +3,7 @@
 {% load humanize %}
 
 {% block titulo %}
-    INDEX
+    {% if title %}{{ title }} | {% endif %}Blog
 {% endblock %}
 
 {% block conteudo %}

@@ -11,9 +11,10 @@ class Comentarios(models.Model):
     email = models.EmailField(verbose_name='E-mail')
     comentario = models.TextField(verbose_name='Comentário')
     post = models.ForeignKey(Posts, on_delete=models.CASCADE)
-    usuario = models.ForeignKey(User, on_delete=models.DO_NOTHING)
+    usuario = models.ForeignKey(User, on_delete=models.DO_NOTHING, blank=True, null=True)
     data = models.DateTimeField(default=timezone.now)
-    publicado_comentario = models.BooleanField(default=False)
+    publicado_comentario = models.BooleanField(default=False, verbose_name='Publicado')
+    # todo deixar default = True e colocar botão do lado do comentário para não publicar
 
     class Meta:
         verbose_name = 'Comentário'

@@ -1,12 +1,12 @@
 from django.db.models.functions import Concat
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.generic.list import ListView
 from django.views.generic.edit import UpdateView
-
+from comentarios.models import Comentarios
 from comentarios.forms import ComentarioForm
 from .models import Posts
 from django.db.models import Q, Count, Case, When, Value
-
+from django.contrib import messages
 
 # Todo
 # Vantagem -> Pode reutilizar o codigo usando herança e etc
@@ -33,7 +33,14 @@ class PostIndex(ListView):
 
 # todo usar mesmo template do index
 class PostBusca(PostIndex):
-    template_name = 'posts/post_busca.html'
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)  # todo check
+        termo = self.request.GET.get('termo', None)
+
+        if termo:
+            context['title'] = termo + ' | Search'
+
+        return context
 
     def get_queryset(self):
         qs = super().get_queryset()
@@ -56,7 +63,10 @@ class PostBusca(PostIndex):
 
 # todo usar mesmo template do index
 class PostCategoria(PostIndex):
-    template_name = 'posts/post_categoria.html'
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)  # todo check
+        context['title'] = self.kwargs.get('categoria').title() + ' | Categoria'
+        return context
 
     def get_queryset(self):
         categoria = self.kwargs.get('categoria', None)
@@ -71,3 +81,33 @@ class PostDetalhes(UpdateView):
     model = Posts
     form_class = ComentarioForm
     context_object_name = 'post'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        post = self.get_object()
+        comentarios = post.comentarios_set.filter(
+            publicado_comentario=True
+        )
+        context['comentarios'] = comentarios
+        return context
+
+    def form_valid(self, form):
+        post_id = self.get_object().id
+
+        comentario = Comentarios(
+            **form.cleaned_data,
+            post_id=post_id
+        )
+
+        if self.request.user.is_authenticated:
+            comentario.usuario_id = self.request.user.id
+
+        comentario.save()
+        messages.success(self.request, 'Comentário criado com successo')
+        return redirect('post_detalhes', pk=post_id)
+
+
+
+
+
+

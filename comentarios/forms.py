@@ -17,3 +17,11 @@ class ComentarioForm(ModelForm):
         email = data.get('email')
         comentario = data.get('comentario')
         print(data)
+
+        # todo see Validation Error
+        # todo tirar
+        if len(nome) < 5:
+            self.add_error(
+                'nome',
+                'nome precisa ser maior que 5 caracteres.'
+            )
