@@ -7,6 +7,7 @@ from comentarios.forms import ComentarioForm
 from .models import Posts
 from django.db.models import Q, Count, Case, When, Value
 from django.contrib import messages
+from django.db import connection
 
 # Todo
 # Vantagem -> Pode reutilizar o codigo usando herança e etc
@@ -19,13 +20,16 @@ class PostIndex(ListView):
     paginate_by = 6
     context_object_name = 'posts'  # object sended to the template
 
+    # todo estudar mais sobre select_related
     def get_queryset(self):
-        qs = super().get_queryset().filter(publicado_post=True).annotate(
+        qs = super().get_queryset().select_related('categoria').filter(publicado_post=True).annotate(
             numero_comentarios=Count(
                 Case(When(comentarios__publicado_comentario=True, then=1))
             )
         )
         return qs
+
+
 
 
     # def get_queryset(self):
@@ -105,9 +109,3 @@ class PostDetalhes(UpdateView):
         comentario.save()
         messages.success(self.request, 'Comentário criado com successo')
         return redirect('post_detalhes', pk=post_id)
-
-
-
-
-
-

@@ -129,25 +129,31 @@ class Command(BaseCommand):
                 nome=c
             )
 
+        details = [
+            ['Lorem Ipsum', 'Latin in programming'],
+            ['Your Title', 'Enter description here'],
+            ['Resources to Learn Python', 'Top resources to learn Python in 2021'],
+            ['Django Rest Framework', 'How Django Rest Framework compares to others'],
+            ['Lion King', 'Review of the Lion King movie'],
+            ['Mechanical Keyboards', 'What to look for when buying a mechanincal keyboard'],
+        ]
+
         for i in range(1, 21):
             x = bool(choice([0, 1]))
             y = choice(lista_categorias)
+            z = choice(details)
             Posts.objects.create(
-                titulo=f'Teste{i}',
+                titulo=f'{z[0]} | {i}',
                 autor=User.objects.get(username='bruno'),
                 conteudo=f'testando{i}',
-                excerto=f'testando{i}',
+                excerto=f'{z[1]}',
                 categoria_id=Categoria.objects.get(nome=y).id,
                 publicado_post=x,
             )
 
         posts_ids = Posts.objects.all()[5:].values_list('id', flat=True)
 
-        user_comentario = User.objects.create(
-            username='Comentador',
-            email='comentador_dos_posts@gmail.com',
-            password='comentador123'
-        )
+        user_comentario = User.objects.get(username='Comentador')
 
         for v in lista_comentarios:
             post_id = choice(posts_ids)
