@@ -153,7 +153,11 @@ class Command(BaseCommand):
 
         posts_ids = Posts.objects.all()[5:].values_list('id', flat=True)
 
-        user_comentario = User.objects.get(username='Comentador')
+        user_comentario = User.objects.get(
+            username='Comentador',
+        )
+
+        print(user_comentario)
 
         for v in lista_comentarios:
             post_id = choice(posts_ids)
