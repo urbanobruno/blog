@@ -126,12 +126,15 @@ class PostDetalhes(View):
     def post(self, request, *args, **kwargs):
         form = self.context['form']
         print(self.context)
+        print(self.context['post'])
+        print(self.context['post'].id)
         if form.is_valid():
+            print(self.context['post'])
             comentario = form.save(commit=False)
             if request.user.is_authenticated:
                 comentario.user.id = request.user.id
 
-            comentario.post.id = self.context['post'].id
+            comentario.post_id = self.context['post'].id
             comentario.save()
             messages.success(request, 'Seu comentário foi enviado com successo para revisão.')
             return redirect('post_detalhes', pk=self.kwargs.get('pk'))

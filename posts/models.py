@@ -32,22 +32,22 @@ class Posts(models.Model):
         super().save(*args, **kwargs)
         # self.resize_image(self.imagem, 800)
 
-    # @staticmethod
-    # def resize_image(image_name, new_width):
-    #     print(settings.MEDIA_ROOT)
-    #     print(image_name)
-    #     img_path = os.path.join(settings.MEDIA_ROOT, image_name)
-    #     img = Image.open(img_path)
-    #     width, height = img.size
-    #     if width <= new_width:
-    #         img.close()
-    #         return
-    #
-    #     new_height = round((new_width * height) / width)
-    #     new_img = img.resize((new_width, new_height), Image.ANTIALIAS)
-    #     new_img.save(
-    #         img_path,
-    #         optimize=True,
-    #         quality=60,
-    #     )
-    #     new_img.close()
+    @staticmethod
+    def resize_image(image_name, new_width):
+        print(settings.MEDIA_ROOT)
+        print(image_name)
+        img_path = os.path.join(settings.MEDIA_ROOT, image_name)
+        img = Image.open(img_path)
+        width, height = img.size
+        if width <= new_width:
+            img.close()
+            return
+
+        new_height = round((new_width * height) / width)
+        new_img = img.resize((new_width, new_height), Image.ANTIALIAS)
+        new_img.save(
+            img_path,
+            optimize=True,
+            quality=60,
+        )
+        new_img.close()

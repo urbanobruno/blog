@@ -1,11 +1,10 @@
-from django.core.exceptions import ValidationError
-from django.forms import ModelForm
+from django import forms
 from .models import Comentarios
 import requests
 from decouple import config
 
 
-class ComentarioForm(ModelForm):
+class ComentarioForm(forms.ModelForm):
     class Meta:
         model = Comentarios
         fields = [
@@ -27,14 +26,10 @@ class ComentarioForm(ModelForm):
         )
         request_result = recaptcha_request.json()
 
-        # todo trocar
         if not request_result.get('success'):
             self.add_error(
                 'comentario',
-                'Intruso. Robô reconhecido.'
+                'Favor preenche o campo "Não ou um robô" abaixo.'
             )
 
-        print(request_result)
 
-        # todo check clean
-        # super().clean()

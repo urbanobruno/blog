@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load crispy_forms_tags %}
+{% load crispy_forms_filters %}
 
 {% block titulo %}
     {{ post.titulo }} | Blog
@@ -7,7 +7,7 @@
 
 {% block conteudo %}
     <!-- POST -->
-    <div class="container">
+    <div class="container mb-5">
         <div class="row pt-5">
             <div class="col-xl"></div>
             <div class="col-xl-8 text-center">
@@ -79,11 +79,17 @@
                         {{ visible|as_crispy_field }}
                     {% endfor %}
 
-                    <div class="g-recaptcha" data-sitekey="6LepAMMcAAAAAG00PD1KmcaN7GYTD_knjBeLKlWF"></div>
-                    <br/>
-                    {% include 'parciais/_messages.html' %}
-                    <input id="envia_comentario" type="submit" class="btn btn-primary"
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="g-recaptcha" data-sitekey="6LepAMMcAAAAAG00PD1KmcaN7GYTD_knjBeLKlWF"></div>
+                        </div>
+                        <div class="col-6">
+                            <input id="envia_comentario" type="submit" class="btn btn-primary big float-right"
                            value="Enviar">
+                        </div>
+                    </div>
+
+                    {% include 'parciais/_messages.html' %}
 
                 </form>
 
