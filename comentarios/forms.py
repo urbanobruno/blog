@@ -4,6 +4,7 @@ from .models import Comentarios
 import requests
 from decouple import config
 
+
 class ComentarioForm(ModelForm):
     class Meta:
         model = Comentarios
@@ -35,9 +36,5 @@ class ComentarioForm(ModelForm):
 
         print(request_result)
 
-        # URL: https://www.google.com/recaptcha/api/siteverify METHOD: POST
-        # secret -> 6LepAMMcAAAAAFveD0H2Rxj1tqo26wRiwQTYe5dC
-        # response -> raw_data['g-recaptcha-response']
-
-        # toddo chheck clean
+        # todo check clean
         # super().clean()
